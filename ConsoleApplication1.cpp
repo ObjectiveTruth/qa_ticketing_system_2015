@@ -56,11 +56,11 @@
 
 			else if (command.compare("create") == 0)
 			{
-				//create()
+				//login()
 				cout << "Successfully created new user !" << endl;
 			}
 
-			else 
+			else
 			{
 				cout << "Unrecogonized command. Please try again" << endl;
 			}
