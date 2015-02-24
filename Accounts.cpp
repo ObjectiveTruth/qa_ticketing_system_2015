@@ -8,18 +8,6 @@
 
 using namespace std;
 
-class Account{
-    public:
-        int type;
-        double credit;
-};
-
-class Accounts{
-    public:
-        Account get(string);
-
-};
-
 
 Account Accounts::get(string search){
     string line;
@@ -54,11 +42,12 @@ Account Accounts::get(string search){
     return newAccount;
 }
 
-//  int main(int argc, char* arg[]){
+//int main(int argc, char* arg[]){
 //
 //
  //   Accounts accounts = Accounts(); 
   //  Account foundAccount = accounts.get("jose");
    // cout << "type is :" << foundAccount.type << endl;
-    //return 0;
+    //cout << "cred it :" << foundAccount.credit <<endl;
+//    return 0;
 //}

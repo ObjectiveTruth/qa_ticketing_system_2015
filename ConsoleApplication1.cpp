@@ -1,8 +1,7 @@
-
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
+#include "accounts.h"
 #define GUEST 0
 #define ADMIN 1
 #define BUYER 2
@@ -15,6 +14,7 @@
 	int main()
 	{
 		
+        Accounts accountsDB = Accounts();
 
 		cout << "*****************************************************" << endl;
 		cout << "Welcome to the Ticket Selling Service" << endl;
