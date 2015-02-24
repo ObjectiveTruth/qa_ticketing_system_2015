@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Create.h"
+#include "accounts.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -28,11 +29,11 @@ bool Create::CheckIfUsernameExist()
 	cout << "Enter Username:";
 	cin >> userName;
 
-	if (userName == "exist"){
-	//if (Account.get(userName)){
-		cout << "Error: Username Already Exist!";
-		exist = true;
-	}
+	Accounts acc;
+	if (acc.get(userName).type != -1){
+	cout << "Error: Username Already Exist!";
+	exist = true;
+	}	
 
 	return exist;
 }

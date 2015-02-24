@@ -1,4 +1,5 @@
 using namespace std;
+#include <string>
 
 class Account{
     public:

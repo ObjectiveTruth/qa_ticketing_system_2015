@@ -57,7 +57,8 @@
 
 			else if (command.compare("create") == 0)
 			{
-				//login()
+				Create create = new Create();
+				create.TryToCreate();
 				cout << "Successfully created new user !" << endl;
 			}
 
