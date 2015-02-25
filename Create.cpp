@@ -5,24 +5,25 @@
 #include <string>
 using namespace std;
 
-Create::Create(void)
-{
-}
+// Variables
+string userName;
+string userType;
+float initialAmount;
 
 // Check if the user has privilege to create
-bool Create::ItHasPrivilege(void)
+bool itHasPrivilege()
 {
 	/*if (currentAccount.type == ADMIN)
-		return true;
+	return true;
 	else{
-		cout << "Error: Not Authorised to create!";
-		return false;
+	cout << "Error: Not Authorised to create!";
+	return false;
 	}*/
 	return true;
 }
 
 // Check if the userName already exists
-bool Create::CheckIfUsernameExist()
+bool checkIfUsernameExist()
 {
 	bool exist = false;
 
@@ -31,15 +32,15 @@ bool Create::CheckIfUsernameExist()
 
 	Accounts acc;
 	if (acc.get(userName).type != -1){
-	cout << "Error: Username Already Exist!";
-	exist = true;
-	}	
+		cout << "Error: Username Already Exist!";
+		exist = true;
+	}
 
 	return exist;
 }
 
 // Check if the type exists
-bool Create::CheckIfTypeExist()
+bool checkIfTypeExist()
 {
 	bool isAType = false;
 
@@ -47,14 +48,14 @@ bool Create::CheckIfTypeExist()
 	cin >> userType;
 
 	//if (userType == (ADMIN || BUYER || SELLER || FULL)){
-		isAType = true;
+	isAType = true;
 	//}
 
 	return isAType;
 }
 
 // Check if the amount of money is in the right format
-bool Create::CheckAmount()
+bool checkAmount()
 {
 	cout << "Enter Initial Amount:";
 	cin >> initialAmount;
@@ -69,15 +70,15 @@ bool Create::CheckAmount()
 	return true;
 }
 
-bool Create::TryToCreate(void)
+bool createUser()
 {
-	
-	if (!ItHasPrivilege() || CheckIfUsernameExist() || !CheckIfTypeExist() || !CheckAmount()){
+
+	if (!itHasPrivilege() || checkIfUsernameExist() || !checkIfTypeExist() || !checkAmount()){
 		return false;
 	}
 	else{
 		cout << "New User Created Successfully!";
 		return true;
 	}
-	
+
 }

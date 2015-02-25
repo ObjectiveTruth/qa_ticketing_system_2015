@@ -3,19 +3,11 @@
 
 using namespace std;
 
-class Create
-{
-public:
-	bool TryToCreate();
-	Create();
+// functions
 
-private:
-	bool ItHasPrivilege();
-	bool CheckIfUsernameExist();
-	bool CheckIfTypeExist();
-	bool CheckAmount();
-	string userName;
-	string userType;
-	float initialAmount;
-};
+bool itHasPrivilege();
+bool checkIfUsernameExist();
+bool checkIfTypeExist();
+bool checkAmount();
+bool createUser();
 
