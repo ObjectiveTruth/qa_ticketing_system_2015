@@ -1,3 +1,5 @@
-miguel,1,100.00
-jose,10,50.15
+jose,2,12.25
 mendez,2,30.00
+miguel,2,50.25
+Arun,3,50.25
+shaine,3,50.25

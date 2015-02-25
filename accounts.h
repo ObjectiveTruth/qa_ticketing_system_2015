@@ -10,6 +10,9 @@ class Account{
 class Accounts{
     public:
         Account get(string);
+        int update(string, double);
+        int create(string, int, double);
+        int remove(string);
 
 };
 
