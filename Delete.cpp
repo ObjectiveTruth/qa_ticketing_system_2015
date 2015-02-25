@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "Delete.h"
-#include "accounts.h"
+#include "Transactions.h"
 
 string userName;
 
@@ -10,7 +9,7 @@ int removeUser()
 
 	cout << "Enter Username:";
 	cin >> userName;
-	Accounts user;
+	//Accounts user;
 
 	//removed = user.remove(userName);
 

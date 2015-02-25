@@ -1,46 +1,34 @@
 #include "stdafx.h"
-#include "Login.h"
-#include "accounts.h"
+#include "Transactions.h"
+#include "TicketSells.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-// Variables
-string userName;
-// Check if the userName already exists
+// Check if the userName exists
 
-
-bool checkIfUsernameExist()
+Handle loginUser()
 {
+	string userName;
 	bool exist = false;
 
 	cout << "Enter Username:";
 	cin >> userName;
 
 	Accounts acc;
-	if (acc.get(userName).type != -1)
-	
-	{
+	Handle handle;
+
+	handle.setCurrentUser(acc.get(userName));
+	if (handle.getCurrentUser().type != -1){
 		exist = true;
 	}
 
-	return exist;
-}
-
-
-bool loginUser()
-{
-
-	if (checkIfUsernameExist())
+	if (exist)
 	{
 		cout << "User Logged in Successfully !";
-		//GLOBAL VARIABLE ALTERED WITH USER TYPE
-		return true;
 	}
 	else
-	{
-		return false;
-	}
-
+		cout << "User does not exist !";
+	return handle;
 }

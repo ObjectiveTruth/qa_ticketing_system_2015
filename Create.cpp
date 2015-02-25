@@ -1,29 +1,22 @@
 #include "stdafx.h"
-#include "Create.h"
-#include "accounts.h"
+#include "Transactions.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-// Variables
-string userName;
-string userType;
-float initialAmount;
-
 // Check if the user has privilege to create
-bool itHasPrivilege()
+bool itHasPrivilege(Account currentUser)
 {
-	/*if (currentAccount.type == ADMIN)
+	if (currentUser.type == 1)
 	return true;
 	else{
 	cout << "Error: Not Authorised to create!";
 	return false;
-	}*/
-	return true;
+	}
 }
 
 // Check if the userName already exists
-bool checkIfUsernameExist()
+bool checkIfUsernameExist(string userName)
 {
 	bool exist = false;
 
@@ -40,7 +33,7 @@ bool checkIfUsernameExist()
 }
 
 // Check if the type exists
-bool checkIfTypeExist()
+bool checkIfTypeExist(string userType)
 {
 	bool isAType = false;
 
@@ -55,7 +48,7 @@ bool checkIfTypeExist()
 }
 
 // Check if the amount of money is in the right format
-bool checkAmount()
+bool checkAmount(float initialAmount)
 {
 	cout << "Enter Initial Amount:";
 	cin >> initialAmount;
@@ -70,15 +63,18 @@ bool checkAmount()
 	return true;
 }
 
-bool createUser()
+int createUser(Account currentUser)
 {
+	string userName;
+	string userType;
+	float initialAmount = -1;
 
-	if (!itHasPrivilege() || checkIfUsernameExist() || !checkIfTypeExist() || !checkAmount()){
-		return false;
+	if (!itHasPrivilege(currentUser) || checkIfUsernameExist(userName) || !checkIfTypeExist(userType) || !checkAmount(initialAmount)){
+		return 0;
 	}
 	else{
 		cout << "New User Created Successfully!";
-		return true;
+		return 1;
 	}
 
 }

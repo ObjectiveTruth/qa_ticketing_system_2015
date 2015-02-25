@@ -1,22 +1,24 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "accounts.h"
-#include "Handle.h"
-
+#include "Transactions.h" 
 #define GUEST 0
 #define ADMIN 1
 #define BUYER 2
 #define SELLER 3
 #define FULL 4
 
+Handle handle = Handle();
 int userType;
 using namespace std;
+string USER = "miguel";
 
 int main()
 {
-	Handle handle;
+	
 	Accounts accountsDB = Accounts();
+
+	Account user = Account();
 
 	cout << "*****************************************************" << endl;
 	cout << "Welcome to the Ticket Selling Service" << endl;
@@ -33,8 +35,7 @@ int main()
 
 		if (command.compare("login") == 0)
 		{
-			handle.login();
-			//cout << "Successfully Logged in !" << endl;
+			handle = handle.login();
 		}
 
 
@@ -65,7 +66,7 @@ int main()
 		else if (command.compare("delete") == 0)
 		{
 			//Delete //delete()
-			cout << "Successfully deleted" << endl;
+			cout << "Successfully added credit" << endl;
 		}
 
 		else
