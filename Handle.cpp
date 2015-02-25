@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Transactions.h"
 #include "Handle.h"
-#include "Addcredit.h"
 
 Handle::Handle()
 {
@@ -45,4 +44,5 @@ Handle Handle::login()
 int Handle::addcredit()
 {
 	return addtouser();
+	return 1;
 }

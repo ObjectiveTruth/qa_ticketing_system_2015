@@ -1,11 +1,7 @@
 #include "stdafx.h"
-#include "accounts.h"
-#include "Delete.h"
-#include "Create.h"
-#include "Addcredit.h"
+#include "Transactions.h"
 #include <iostream>
 #include <string>
-#include "Accounts.h"
 
 using namespace std;
 
@@ -35,10 +31,10 @@ bool checkIfUsernameExist()
 
 bool addtouser()
 {
-
+	Accounts test;
 	if (checkIfUsernameExist())
 	{
-		handle.remove(userName)
+		test.remove(userName);
 
 			cout << "Enter Credit to add:";
 		    cin >> Amount;
@@ -49,17 +45,17 @@ bool addtouser()
 			cout << "ERROR: Please enter the initial amount in the format: XX.XX\n";
 			cin.clear();
 			cin.ignore(256, '\n');
-			cin >> initialAmount;
+			cin >> Amount;
 		}
 
-		acc.update(userName, Amount);
+		test.update(userName, Amount);
 		//GLOBAL VARIABLE ALTERED WITH USER TYPE
 		return true;
 
 	}
 	else
 	{
-		cout << "Invalid Username !"
+		cout << "Invalid Username !";
 		return false;
 	}
 

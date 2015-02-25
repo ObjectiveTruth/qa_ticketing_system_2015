@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "Transactions.h"
-#include "TicketSells.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
 // Check if the userName exists
-
+// return the handle with the current user
 Handle loginUser()
 {
+	//Variables
 	string userName;
 	bool exist = false;
 
@@ -19,6 +19,7 @@ Handle loginUser()
 	Accounts acc;
 	Handle handle;
 
+	//Set the current User
 	handle.setCurrentUser(acc.get(userName));
 	if (handle.getCurrentUser().type != -1){
 		exist = true;
@@ -30,5 +31,6 @@ Handle loginUser()
 	}
 	else
 		cout << "User does not exist !";
+
 	return handle;
 }

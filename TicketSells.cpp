@@ -53,7 +53,7 @@ int main()
 
 		else if (command.compare("addcredit") == 0)
 		{
-			//addcredit()
+			handle.addcredit();
 			cout << "Successfully added credit" << endl;
 		}
 
@@ -65,8 +65,8 @@ int main()
 
 		else if (command.compare("delete") == 0)
 		{
-			//Delete //delete()
-			cout << "Successfully added credit" << endl;
+			handle.remove();
+			//cout << "Successfully added credit" << endl;
 		}
 
 		else

@@ -4,19 +4,19 @@ using namespace std;
 //a particular user. See main.cpp for type definitions
 //credit is the current credit of that user
 class Account{
-    public:
-        int type;
-        double credit;
+public:
+	int type;
+	double credit;
 };
 
 //A variable that allows easy access to the Database
 //with convenient helper functions shown below
 class Accounts{
-    public:
-        Account get(string);
-        int update(string, double);
-        int create(string, int, double);
-        int remove(string);
+public:
+	Account get(string);
+	int update(string, double);
+	int create(string, int, double);
+	int remove(string);
 
 };
 
