@@ -7,5 +7,6 @@ public:
 	int create();
 	int remove();
 	int login();
+	int addcredit();
 }
 ;
