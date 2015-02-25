@@ -6,5 +6,6 @@ public:
 	~Handle();
 	int create();
 	int remove();
-};
-
+	int login();
+}
+;

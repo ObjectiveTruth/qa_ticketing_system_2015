@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Handle.h"
 #include "Create.h"
-#include "Delete.h"
+#include "Login.h"
+//#include "Delete.h"
 
 Handle::Handle()
 {
@@ -17,7 +18,7 @@ int Handle::create()
 	return createUser();
 }
 
-int Handle::remove()
+int Handle::login()
 {
-	return removeUser();
+	return loginUser();
 }

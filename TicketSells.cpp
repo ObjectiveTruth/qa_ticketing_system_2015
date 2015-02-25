@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "accounts.h"
 #include "Handle.h"
+
 #define GUEST 0
 #define ADMIN 1
 #define BUYER 2
@@ -32,8 +33,8 @@ int main()
 
 		if (command.compare("login") == 0)
 		{
-			//login()
-			cout << "Successfully Logged in !" << endl;
+			handle.login();
+			//cout << "Successfully Logged in !" << endl;
 		}
 
 
@@ -64,7 +65,7 @@ int main()
 		else if (command.compare("delete") == 0)
 		{
 			//Delete //delete()
-			cout << "Successfully added credit" << endl;
+			cout << "Successfully deleted" << endl;
 		}
 
 		else
