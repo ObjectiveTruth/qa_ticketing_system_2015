@@ -14,5 +14,6 @@ public:
 	int remove();
 	Handle login();
 	Account getCurrentUser();
+	int addcredit();
 };
 
