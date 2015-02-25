@@ -10,7 +10,10 @@
 
 using namespace std;
 
-
+//Get searches the database for the occurance of a username
+//username must be a string. 
+//Returns an Account object with the properites of that user if they exist
+//If username doens't exist, all values of the Account object will be -1
 Account Accounts::get(string search){
     string line;
     ifstream myfile ("accounts.txt");
@@ -43,6 +46,9 @@ Account Accounts::get(string search){
     return newAccount;
 }
 
+//Helper Function for all functions in this file
+//Reads the database and converts it to a string for easy
+//manipulation
 string readFile(){
     std::ifstream t("accounts.txt");
     std::string str((std::istreambuf_iterator<char>(t)),
@@ -50,6 +56,10 @@ string readFile(){
     return str;
 }
 
+//Updates the user's entry in the database with the new
+//credit amount
+//Returns 0 if user is not found, 
+//Returns 1 if user is found.
 int Accounts::update(string username, double credit){
     string readFromFile = readFile();
     std::size_t found = readFromFile.find(username);
@@ -61,13 +71,10 @@ int Accounts::update(string username, double credit){
         std::size_t secondFound = readFromFile.find(',', firstFound+1);
         std::size_t foundEnd = readFromFile.find('\n', found+1);
         readFromFile.replace(secondFound+1,foundEnd-secondFound-1 ,ss.str() );
-        //cout <<  "found it! at pos: "<< found << " and position: " <<foundEnd<<  " credit " <<credit <<endl;
     }  
     else{
-        //cout << "not found!" << endl;
         return 0;
     }
-    //cout << readFromFile << endl;
     ofstream myfile;
     myfile.open ("accounts.txt");
     myfile << readFromFile;
@@ -76,6 +83,10 @@ int Accounts::update(string username, double credit){
     return 1;
 }
 
+//Creates a new entry in the databse with the values of
+//uesrname, type and starting credit
+//returns 0 if fails
+//returns 1 if succesful
 int Accounts::create(string username, int type, double credit){
     std::ofstream out;
     out.open("accounts.txt", std::ios::app); 
@@ -83,16 +94,17 @@ int Accounts::create(string username, int type, double credit){
     return 1;
 }
 
+//Removes an entry from the databse with the username specified
+//returns 0 if the entry is not found
+//returns 1 if the entry is found
 int Accounts::remove(string username){
     string readFromFile = readFile();
     std::size_t found = readFromFile.find(username);
     if(found!=std::string::npos){
         std::size_t foundEnd = readFromFile.find('\n', found);
         readFromFile.replace(found, foundEnd+1, "");
-        //cout <<  "found it! at pos: "<< found << " and position: " <<foundEnd<<endl;
     }  
     else{
-        //cout << "not found!" << endl;
         return 0;
     }
     ofstream myfile;
@@ -102,15 +114,3 @@ int Accounts::remove(string username){
 
     return 1;
 }
-
-//int main(int argc, char* arg[]){
- //   Accounts accounts = Accounts(); 
-  //  Account foundAccount = accounts.get("jose");
-    //accounts.create("yes", 2, 52.12);
-    //accounts.create("shaine", 3, 50.25);
-    //accounts.remove("Arun");
-   // accounts.update("jose", 12.25);
-//    cout << "type is :" << foundAccount.type << endl;
-//    cout << "cred it :" << foundAccount.credit <<endl;
-//    return 0;
-//}
