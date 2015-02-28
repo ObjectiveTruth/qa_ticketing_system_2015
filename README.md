@@ -14,7 +14,7 @@ This is acheived with proper documentation, tests, and overall code quality.
 
 The MIT License (MIT)
 
-Copyright (c) <year> <copyright holders>
+Copyright (c) <2015> <copyright holders>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
