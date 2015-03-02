@@ -5,57 +5,37 @@
 
 using namespace std;
 
-// Variables
-string userName;
-int Amount;
-// Check if the userName already exists
-
-
-bool checkIfUsernameExist()
+//Function that add credit to the user
+//returns 1 if the credit is added
+//returns 0 if it can't add credit
+bool addtouser()
 {
-	bool exist = false;
+	//Variables
+	Accounts test;
+	Account aux;
+	string userName;
+	float amount;
 
+	//Get the user
 	cout << "Enter Username:";
 	cin >> userName;
 
-	Accounts acc;
-	if (acc.get(userName).type != -1)
-	
+	if (checkIfUsernameExist(userName))					//If the user exist
 	{
-		exist = true;
-	}
-
-	return exist;
-}
-
-
-bool addtouser()
-{
-	Accounts test;
-	if (checkIfUsernameExist())
-	{
-		test.remove(userName);
-
-			cout << "Enter Credit to add:";
-		    cin >> Amount;
-
-		while (!cin)
-		
-		{
-			cout << "ERROR: Please enter the initial amount in the format: XX.XX\n";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cin >> Amount;
+		cout << "Enter Credit to add:";					//Ask for the credit
+		while (!checkAmount(&amount)){					//If not in the right format
+			cout << "Enter Credit to add:";					//Keep asking
 		}
 
-		test.update(userName, Amount);
-		//GLOBAL VARIABLE ALTERED WITH USER TYPE
+		//If it's here, everything is okay
+		test.update(userName, test.get(userName).credit + amount);	//Update the credit
+		cout << "Successfully added credit" << endl;				//And tell it to the user
 		return true;
 
 	}
 	else
 	{
-		cout << "Invalid Username !";
+		cout << "Invalid Username !";	//Ops, invalid user!
 		return false;
 	}
 

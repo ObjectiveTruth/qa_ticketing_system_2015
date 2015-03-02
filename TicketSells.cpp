@@ -2,16 +2,9 @@
 #include <string>
 #include <cstdlib>
 #include "Transactions.h" 
-#define GUEST 0
-#define ADMIN 1
-#define BUYER 2
-#define SELLER 3
-#define FULL 4
 
 Handle handle = Handle();
-int userType;
 using namespace std;
-string USER = "miguel";
 
 int main()
 {
@@ -38,7 +31,6 @@ int main()
 			handle = handle.login();
 		}
 
-
 		else if (command.compare("buy") == 0)
 		{
 			//buy()
@@ -54,19 +46,27 @@ int main()
 		else if (command.compare("addcredit") == 0)
 		{
 			handle.addcredit();
-			cout << "Successfully added credit" << endl;
 		}
 
 		else if (command.compare("create") == 0)
 		{
 			handle.create();
-			//cout << "Successfully created new user !" << endl;
 		}
 
 		else if (command.compare("delete") == 0)
 		{
 			handle.remove();
-			//cout << "Successfully added credit" << endl;
+		}
+
+		else if (command.compare("help") == 0)
+		{
+			cout << "Here is the commands that you can use:" << endl << endl;
+			cout << "login \t\tFor login into the system" << endl;
+			cout << "buy \t\tCommand to buy tickets" << endl;
+			cout << "sell \t\tCommand to sell tickets" << endl;
+			cout << "addcredit \tCommand to add credit to the user" << endl;
+			cout << "create \t\tCommand to create a new user" << endl;
+			cout << "delete \t\tCommand to delete a new user" << endl;
 		}
 
 		else

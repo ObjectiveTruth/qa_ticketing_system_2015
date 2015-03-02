@@ -5,32 +5,28 @@
 
 using namespace std;
 
-// Check if the userName exists
-// return the handle with the current user
+//Check if the userName exists
+//returns the handle with the current user
 Handle loginUser()
 {
 	//Variables
 	string userName;
 	bool exist = false;
-
-	cout << "Enter Username:";
-	cin >> userName;
-
 	Accounts acc;
 	Handle handle;
 
-	//Set the current User
-	handle.setCurrentUser(acc.get(userName));
-	if (handle.getCurrentUser().type != -1){
-		exist = true;
+	//Get the user
+	cout << "Enter Username:";
+	cin >> userName;
+
+	if (checkIfUsernameExist(userName)){			//Check if the user exists, if yes
+		handle.setCurrentUser(acc.get(userName));		//Set as the current user
+		cout << "User Logged in Successfully !";		//And tell the user
 	}
 
-	if (exist)
-	{
-		cout << "User Logged in Successfully !";
+	else{											//If no
+		cout << "User does not exist !";				//Tell the user too
 	}
-	else
-		cout << "User does not exist !";
-
+		
 	return handle;
 }
