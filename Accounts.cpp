@@ -21,6 +21,7 @@ Account Accounts::get(string search){
 	Account newAccount = Account();
 	newAccount.type = -1;
 	newAccount.credit = -1;
+    newAccount.username = "";
 
 	if (myfile.is_open()){
 		while (getline(myfile, line)){
@@ -31,7 +32,8 @@ Account Accounts::get(string search){
 			std::string pchConvert(pch);
 			if (search.compare(pchConvert) == 0){
 				//cout << "found it!" << endl;
-				newAccount = Account();
+                
+                newAccount.username = search;
 
 				pch = strtok(NULL, ",");
 				newAccount.type = atoi(pch);

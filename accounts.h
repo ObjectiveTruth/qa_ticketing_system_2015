@@ -7,6 +7,7 @@ class Account{
 public:
 	int type;
 	double credit;
+    string username;
 };
 
 //A variable that allows easy access to the Database
