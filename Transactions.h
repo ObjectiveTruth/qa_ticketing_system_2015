@@ -33,3 +33,9 @@ int refundUser(Account currentUser);
 
 //Login functions
 int loginUser(Handle *currentHandle);
+
+//Buy functions
+int buyTicket(Account currentUser);
+
+//Sell function
+int sellTicket(Account currentUser);

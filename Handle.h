@@ -17,5 +17,7 @@ public:
 	int addcredit();
 	int refund();
 	int logout();
+	int buy();
+	int sell();
 };
 

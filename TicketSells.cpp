@@ -33,14 +33,12 @@ int main()
 
 		else if (command.compare("buy") == 0)
 		{
-			//buy()
-			cout << "Successfully purchased tickets" << endl;
+			handle.buy();
 		}
 
 		else if (command.compare("sell") == 0)
 		{
-			//sell()
-			cout << "Successfully sold tickets" << endl;
+			handle.sell();
 		}
 
 		else if (command.compare("addcredit") == 0)

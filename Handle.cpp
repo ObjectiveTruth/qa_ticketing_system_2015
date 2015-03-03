@@ -86,3 +86,13 @@ int Handle::logout()
 		return 0;
 	}
 }
+
+int Handle::buy()
+{
+	return buyTicket(currentUser);
+}
+
+int Handle::sell()
+{
+	return sellTicket(currentUser);
+}

@@ -37,7 +37,7 @@ string trimLeftRightWhiteSpace(string suspect){
 //Helper Function for all functions in this file
 //Reads the database and converts it to a string for easy
 //manipulation
-string readFile(){
+string readFile1(){
 	std::ifstream t("tickets.txt");
 	std::string str((std::istreambuf_iterator<char>(t)),
 		std::istreambuf_iterator<char>());
@@ -48,7 +48,7 @@ string readFile(){
 //sellerName. Returns 1 if successful, 0 if unsuccessful
 
 int Tickets::add(string eventName, string sellerName, int addTickets, double price){
-	string readFromFile = readFile();
+	string readFromFile = readFile1();
 	stringstream outputStream;
     istringstream fileInputStream(readFromFile);
     string line;    
@@ -96,7 +96,7 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
 //Removes the number of tickets sold for a sellerName and eventName
 //Returns 1 if successful, 0 if unsuccesful
 int Tickets::remove(string eventName, string sellerName, int removeTickets, double price){
-	string readFromFile = readFile();
+	string readFromFile = readFile1();
 	stringstream outputStream;
     istringstream fileInputStream(readFromFile);
     string line;    

@@ -1,5 +1,4 @@
-jose,2,12.25
-mendez,2,30.00
-miguel,2,50.25
-Arun,3,50.25
-shaine,3,50.25
+miguel,1,400
+jose,10,50.15
+mendez,2,502
+gui,1,1093
