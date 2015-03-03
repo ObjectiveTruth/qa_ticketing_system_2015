@@ -28,7 +28,7 @@ int main()
 
 		if (command.compare("login") == 0)
 		{
-			handle = handle.login();
+			handle.login();
 		}
 
 		else if (command.compare("buy") == 0)

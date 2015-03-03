@@ -39,6 +39,7 @@ int refundUser(Account currentUser){
 		cout << "Error: You do not have privilege to use this command!";											//Print error to user
 		return 0;																									//Return 0
 	}
+
 	cout << "Enter the buyer username:";																			//Get the buyer name
 	cin >> buyerName;
 

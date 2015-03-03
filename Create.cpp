@@ -19,7 +19,7 @@ int createUser(Account currentUser)
 		created = 0;										//And cancel the transaction
 	}
 	else{													//If the user has privilege
-		cout << "Enter Username : ";						//Get the user name
+		cout << "Enter Username:";							//Get the user name
 		cin >> userName;
 
 		if (checkIfUsernameExist(userName)){				//If the user does not exist
