@@ -1,7 +1,7 @@
 #include "Transactions.h"
 
 // Check if the user has privilege to create
-bool itHasPrivilege(Account currentUser)
+bool itIsAdmin(Account currentUser)
 {
 	if (currentUser.type == 1)
 		return true;

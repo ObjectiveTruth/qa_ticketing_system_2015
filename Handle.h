@@ -15,5 +15,7 @@ public:
 	Handle login();
 	Account getCurrentUser();
 	int addcredit();
+	int refund();
+	int logout();
 };
 

@@ -58,15 +58,27 @@ int main()
 			handle.remove();
 		}
 
+		else if (command.compare("refund") == 0)
+		{
+			handle.refund();
+		}
+
+		else if (command.compare("logout") == 0)
+		{
+			handle.logout();
+		}
+
 		else if (command.compare("help") == 0)
 		{
 			cout << "Here is the commands that you can use:" << endl << endl;
-			cout << "login \t\tFor login into the system" << endl;
+			cout << "login \t\tCommand to login into the system" << endl;
 			cout << "buy \t\tCommand to buy tickets" << endl;
 			cout << "sell \t\tCommand to sell tickets" << endl;
 			cout << "addcredit \tCommand to add credit to the user" << endl;
 			cout << "create \t\tCommand to create a new user" << endl;
 			cout << "delete \t\tCommand to delete a new user" << endl;
+			cout << "refund \t\tCommand to refund the user" << endl;
+			cout << "logout \t\tCommand to logout" << endl;
 		}
 
 		else

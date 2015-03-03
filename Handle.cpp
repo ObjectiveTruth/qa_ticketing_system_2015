@@ -5,6 +5,8 @@
 Handle::Handle()
 {
 	currentUser.type = -1;		//Always initialize with type -1, so we know that we don't have a current user yet
+	currentUser.credit = -1;	//Initialize variable
+	currentUser.username = "";	//Initialize variable
 }
 
 
@@ -60,4 +62,26 @@ Handle Handle::login()
 int Handle::addcredit()
 {
 	return addtouser();
+}
+
+//This function is for refund the user
+int Handle::refund()
+{
+	return refundUser(currentUser);
+}
+
+//This function is for logout the user
+int Handle::logout()
+{
+	if (currentUser.type != -1){
+		currentUser.type = -1;
+		currentUser.credit = -1;
+		currentUser.username = "";
+		cout << "Successfully logged out!!" << endl;
+		return 1;
+	}
+	else{
+		cout << "Error: You need to be logged in to logout";
+		return 0;
+	}
 }

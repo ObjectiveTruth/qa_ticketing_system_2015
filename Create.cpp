@@ -14,7 +14,7 @@ int createUser(Account currentUser)
 	int userType = -1, created = -1;
 	float initialAmount = -1;
 
-	if (!itHasPrivilege(currentUser)){						//Check if the user has privilege
+	if (!itIsAdmin(currentUser)){							//Check if the user has privilege
 		cout << "Error: Not Authorised to create!";			//If not, tell the user
 		created = 0;										//And cancel the transaction
 	}

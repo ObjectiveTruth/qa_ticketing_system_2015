@@ -14,7 +14,7 @@ using namespace std;
 #define FULL 4
 
 //Check functions
-bool itHasPrivilege(Account currentUser);
+bool itIsAdmin(Account currentUser);
 bool checkIfUsernameExist(string userName);
 bool checkIfTypeExist(int *userType);
 bool checkAmount(float *initialAmount);
@@ -25,8 +25,11 @@ int removeUser();
 //Create functions
 int createUser(Account currentUser);
 
-// Add credit functions
+//Add credit functions
 bool addtouser();
+
+//Refund functions
+int refundUser(Account currentUser);
 
 //Login functions
 Handle loginUser();
