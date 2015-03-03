@@ -12,7 +12,7 @@ public:
 	int setCurrentUser(Account newUser);
 	int create();
 	int remove();
-	Handle login();
+	int login();
 	Account getCurrentUser();
 	int addcredit();
 	int refund();

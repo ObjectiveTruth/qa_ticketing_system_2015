@@ -20,7 +20,7 @@ bool checkIfTypeExist(int *userType);
 bool checkAmount(float *initialAmount);
 
 //Delete functions
-int removeUser();
+int removeUser(Account currentUser);
 
 //Create functions
 int createUser(Account currentUser);
@@ -32,4 +32,4 @@ bool addtouser();
 int refundUser(Account currentUser);
 
 //Login functions
-Handle loginUser();
+int loginUser(Handle *currentHandle);

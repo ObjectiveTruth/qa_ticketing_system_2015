@@ -46,14 +46,15 @@ int Handle::create()
 //returns 1 if the user is found and removed
 int Handle::remove()
 {
-	return removeUser();
+	return removeUser(currentUser);
 }
 
 //This function is for login into the system
-//returns the handle with the current user
-Handle Handle::login()
+//returns 1 with successfully logged in
+//0 otherwise
+int Handle::login()
 {
-	return loginUser();
+	return loginUser(this);
 }
 
 //This function is for add credit for the user
