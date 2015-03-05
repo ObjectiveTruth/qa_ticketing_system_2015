@@ -35,21 +35,11 @@ string trimLeftRightWhiteSpace(string suspect){
     return suspect;
 }
 
-//Helper Function for all functions in this file
-//Reads the database and converts it to a string for easy
-//manipulation
-string readFile1(){
-	std::ifstream t("tickets.txt");
-	std::string str((std::istreambuf_iterator<char>(t)),
-		std::istreambuf_iterator<char>());
-	return str;
-}
-
 //Adds the number of tickets specified for a particular event being sold by 
 //sellerName. Returns 1 if successful, 0 if unsuccessful
 
 int Tickets::add(string eventName, string sellerName, int addTickets, double price){
-	string readFromFile = readFile1();
+	string readFromFile = readFile();
 	stringstream outputStream;
     istringstream fileInputStream(readFromFile);
     string line;    
@@ -79,14 +69,20 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
                 //ADD LOGIC HERE TO UPDAET THE FIELDS
             }
         }
-        outputStream << line;
         if(line.compare("END") != 0){
-            outputStream << endl;
+            outputStream << line << endl;
         }
     }
-    if(previousLine.compare("END") != 0){
-        outputStream << "END";
+    //If its not found, then add it to the end
+    if(returnValue == 0){
+        stringstream ss;
+        ss << setw(EVENTNAME_SIZE) << setfill(' ') << left << eventName << ' ';
+        ss << setw(SELLERNAME_SIZE) << setfill(' ') << left << sellerName << ' ';
+        ss << setw(TICKET_NUM_SIZE) << setfill('0') << right << addTickets << ' ';
+        ss << setw(PRICE_SIZE) << setfill('0') << right << price*100 << ' ' << endl;
+        outputStream << ss.str();
     }
+    outputStream << "END";
 	ofstream myfile;
 	myfile.open("tickets.txt");
 	myfile << outputStream.str();
@@ -96,8 +92,8 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
 
 //Removes the number of tickets sold for a sellerName and eventName
 //Returns 1 if successful, 0 if unsuccesful
-int Tickets::remove(string eventName, string sellerName, int removeTickets, double price){
-	string readFromFile = readFile1();
+int Tickets::remove(string eventName, string sellerName, int removeTickets){
+	string readFromFile = readFile();
 	stringstream outputStream;
     istringstream fileInputStream(readFromFile);
     string line;    
@@ -109,6 +105,8 @@ int Tickets::remove(string eventName, string sellerName, int removeTickets, doub
         suspect = trimLeftRightWhiteSpace(line.substr(0,EVENTNAME_SIZE));
         if (eventName.compare(suspect) == 0){
             string sellerNameSuspect = line.substr(EVENTNAME_SIZE + 1, SELLERNAME_SIZE);
+            sellerNameSuspect = trimLeftRightWhiteSpace(sellerNameSuspect);
+            cout << "sellernameSuspect: " << sellerNameSuspect << endl;
             if (sellerName.compare(sellerNameSuspect) == 0){
                 returnValue = 1;
                 //extracts the number of tickets portion
@@ -117,24 +115,26 @@ int Tickets::remove(string eventName, string sellerName, int removeTickets, doub
                 int oldTicketsNumber = atoi(ticketsAlpha.c_str());
                 //adds the old value with the new value
                 int finalTicketsNumber = oldTicketsNumber - removeTickets;
-                //formats it nicely with leading 0s to fill 3 spaces
-                stringstream ss;
-                ss << setw(3) << setfill('0') << finalTicketsNumber;
-                //replaces the line with new value
-                line.replace(EVENTNAME_SIZE + SELLERNAME_SIZE +2, TICKET_NUM_SIZE , 
-                        ss.str());
+                if(finalTicketsNumber < 1){
+                    line = "";
+                }
+                else{
+                    //formats it nicely with leading 0s to fill 3 spaces
+                    stringstream ss;
+                    ss << setw(3) << setfill('0') << finalTicketsNumber;
+                    //replaces the line with new value
+                    line.replace(EVENTNAME_SIZE + SELLERNAME_SIZE +2, TICKET_NUM_SIZE , 
+                            ss.str());
+                }
 
                 //ADD LOGIC HERE TO UPDAET THE FIELDS
             }
         }
-        outputStream << line;
         if(line.compare("END") != 0){
-            outputStream << endl;
+            outputStream << line << endl;
         }
     }
-    if(previousLine.compare("END") != 0){
-        outputStream << "END";
-    }
+    outputStream << "END";
 	ofstream myfile;
 	myfile.open("tickets.txt");
 	myfile << outputStream.str();
@@ -191,9 +191,11 @@ Ticket Tickets::getInfo(string eventName, string sellerName){
 //int main(){
 //
 //    Tickets tickets = Tickets();
-//    tickets.add("Game of Thrones", "Peter Griffin", 1, 2.0);
-//   tickets.remove("East of Eden", "Marrick Port", 1, 2.0);
-//    tickets.getInfo("House of Cards", "Barney Gunble");
+//    tickets.add("Game of Thrones1`", "Peter Griffin", 1, 2.87);
+//    tickets.add("Game of Thrones1`", "Peter Griffin", 1, 2.87);
+//    tickets.remove("Game of Thrones1`", "Peter Griffin", 1);
+//    //tickets.remove("East of Eden", "Marrick Port", 28, 2.0);
+//    //tickets.getInfo("House of Cards", "Barney Gunble");
 //
 //    return 0;
 //}

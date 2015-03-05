@@ -1,7 +1,7 @@
 using namespace std;
 #include <string>
-//Tickets is a database helper class for vieweing
-//adding and removing tickets from tickets.txt
+//Ticket is a case class that holds info about the tickets returned
+//contains, ticketsLeft, price, eventName and sellerName
 
 class Ticket{
     public:
@@ -11,10 +11,12 @@ class Ticket{
         string sellerName;
 };
 
+//Tickets is a database helper class for vieweing
+//adding and removing tickets from tickets.txt
 class Tickets{
     public:
         Ticket getInfo(string, string);
         int add(string, string, int, double);
-        int remove(string, string, int, double);
+        int remove(string, string, int);
 };
 
