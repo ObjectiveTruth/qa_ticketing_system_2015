@@ -19,6 +19,7 @@ using namespace std;
 #define EVENTNAME_SIZE 19
 #define SELLERNAME_SIZE 13
 #define TICKET_NUM_SIZE 3
+#define PRICE_SIZE 6
 
 //Helper function to trim the white space from a string starting from 
 //the left and from the right
@@ -141,12 +142,18 @@ int Tickets::remove(string eventName, string sellerName, int removeTickets, doub
     return returnValue;
 }
 
-//Returns the number of tickets left for a particular event and seller
-//Returns 1 if successful, 0 if unsuccesful
-int Tickets::getInfo(string eventName, string sellerName){
+//Returns a Ticket Object which contains the information needed
+//If record doesn't exist, a ticket object will be returned with 
+//.ticketsleft = -1, .price = -1, and eventName and sellerName
+//set to an empty string
+Ticket Tickets::getInfo(string eventName, string sellerName){
 	string line;
 	ifstream myfile("tickets.txt");
-    int returnTickets = -1;
+    Ticket returnTicket = Ticket();
+    returnTicket.ticketsLeft = -1;
+    returnTicket.price = -1.0;
+    returnTicket.eventName = "";
+    returnTicket.sellerName = "";
     string suspect;
 
 	if (myfile.is_open()){
@@ -159,14 +166,24 @@ int Tickets::getInfo(string eventName, string sellerName){
                 if (sellerName.compare(sellerNameSuspect) == 0){
                     string ticketsAlpha =line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE + 2, 
                             TICKET_NUM_SIZE); 
-                    returnTickets = atoi(ticketsAlpha.c_str());
+                    string priceAlpha = line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE
+                            + TICKET_NUM_SIZE + 3, PRICE_SIZE);
+
+                    returnTicket.ticketsLeft = atoi(ticketsAlpha.c_str());
+                    returnTicket.eventName = suspect;
+                    returnTicket.sellerName = sellerNameSuspect;
+                    returnTicket.price = atof(priceAlpha.c_str())/100;
+                    //cout << "TicketsLeft:" << returnTicket.ticketsLeft << endl;
+                    //cout << "EventName:" << returnTicket.eventName << endl;
+                    //cout << "SellerName:" << returnTicket.sellerName << endl;
+                    //cout << "Price:" << returnTicket.price << endl;
+                    return returnTicket;
                 }
-                return returnTickets;
 			}
 		}
 		myfile.close();
 	}
-	return returnTickets;
+	return returnTicket;
 
 
 }
@@ -174,9 +191,9 @@ int Tickets::getInfo(string eventName, string sellerName){
 //int main(){
 //
 //    Tickets tickets = Tickets();
-//    cout << "return : " << tickets.getInfo("Reebok one", "Peter Griffin") << endl;
-//    tickets.add("Reebok one", "Peter Griffin", 1, 2.0);
-//    tickets.remove("Reebok one", "Peter Griffin", 1, 2.0);
+//    tickets.add("Game of Thrones", "Peter Griffin", 1, 2.0);
+//   tickets.remove("East of Eden", "Marrick Port", 1, 2.0);
+//    tickets.getInfo("House of Cards", "Barney Gunble");
 //
 //    return 0;
 //}
