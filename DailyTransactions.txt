@@ -1,0 +1,12 @@
+01 username         BS 000002973
+02 username         FS 000003053
+06 username         SS 000010000
+05 buyer           buyer           000002838
+03 EVENT_NAME          seller          018 006013
+04 EVENT_NAME          seller          082 013400
+01 username         BS 000002973
+02 username         FS 000003053
+06 username         SS 000010000
+05 buyer           buyer           000002838
+03 EVENT_NAME          seller          018 006013
+04 EVENT_NAME          seller          082 013400
