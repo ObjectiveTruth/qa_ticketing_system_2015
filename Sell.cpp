@@ -5,6 +5,12 @@
 #include <cstdlib>
 using namespace std;
 
+/*
+	TODO
+		Constrains
+*/
+
+
 int sellTicket(Account currentUser){
 
 	//Variables
@@ -18,7 +24,8 @@ int sellTicket(Account currentUser){
 	}
 	else{																								//If the user has privilege
 		cout << "Event Title:";																			//Get the event title
-		cin >> eventName;
+		cin.ignore();													//Ignore the '\n'
+		getline(cin, eventName);										//And get the hole line
 		
 		sellerName = currentUser.username;
 
@@ -29,6 +36,13 @@ int sellTicket(Account currentUser){
 		cin >> pricePerTicket;
 
 		//Add tickets
+		Tickets ticket = Tickets();
+		ticket.add(eventName, sellerName, nOfTickets, pricePerTicket);
+
+		/*
+			Need to add the constrains here
+		*/
+		
 
 		cout << endl << "The tickets now has been posted to sell!" << endl;
 		cout << "Please note that the tickets will just appear to sell when you logout";

@@ -20,7 +20,8 @@ int createUser(Account currentUser)
 	}
 	else{													//If the user has privilege
 		cout << "Enter Username:";							//Get the user name
-		cin >> userName;
+		cin.ignore();								//Ignore the '\n'
+		getline(cin, userName);						//And get the hole line
 
 		if (checkIfUsernameExist(userName)){				//If the user does not exist
 			cout << "Error: Username Already Exist!";		//Tell the user

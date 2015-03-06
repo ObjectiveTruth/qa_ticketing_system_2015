@@ -96,7 +96,7 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
 
 //Removes the number of tickets sold for a sellerName and eventName
 //Returns 1 if successful, 0 if unsuccesful
-int Tickets::remove(string eventName, string sellerName, int removeTickets, double price){
+int Tickets::remove(string eventName, string sellerName, int removeTickets){
 	string readFromFile = ReadFileTickets();
 	stringstream outputStream;
     istringstream fileInputStream(readFromFile);
