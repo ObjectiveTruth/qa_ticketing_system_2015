@@ -63,6 +63,11 @@ string readFile(){
 //Returns 0 if user is not found, 
 //Returns 1 if user is found.
 int Accounts::update(string username, double credit){
+	
+	//Variables for the log
+	Accounts acc;
+	Account account;
+
 	string readFromFile = readFile();
 	std::size_t found = readFromFile.find(username);
 	stringstream ss;
@@ -82,6 +87,9 @@ int Accounts::update(string username, double credit){
 	myfile << readFromFile;
 	myfile.close();
 
+	account = acc.get(username);
+	DT.logAddCredit(account.username, account.type, account.credit);		//Log the addcredit in the daily transaction file
+
 	return 1;
 }
 
@@ -93,6 +101,7 @@ int Accounts::create(string username, int type, double credit){
 	std::ofstream out;
 	out.open("accounts.txt", std::ios::app);
 	out << username << "," << type << "," << credit << endl;
+	DT.logCreate(username, type, credit);							//Log the create in the daily transaction file
 	return 1;
 }
 
@@ -100,6 +109,12 @@ int Accounts::create(string username, int type, double credit){
 //returns 0 if the entry is not found
 //returns 1 if the entry is found
 int Accounts::remove(string username){
+	
+	//Variables for the log
+	Accounts acc;
+	Account account;
+	account = acc.get(username);
+
 	string readFromFile = readFile();
 	std::size_t found = readFromFile.find(username);
 	if (found != std::string::npos){
@@ -113,6 +128,8 @@ int Accounts::remove(string username){
 	myfile.open("accounts.txt");
 	myfile << readFromFile;
 	myfile.close();
+
+	DT.logDelete(account.username,account.type,account.credit);		//Log the delete in the daily transaction file
 
 	return 1;
 }

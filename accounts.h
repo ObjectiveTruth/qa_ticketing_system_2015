@@ -1,5 +1,6 @@
 using namespace std;
 #include <string>
+#include "DailyTransactions.h"
 //Account is a case class that holds information about 
 //a particular user. See main.cpp for type definitions
 //credit is the current credit of that user
@@ -19,5 +20,7 @@ public:
 	int create(string, int, double);
 	int remove(string);
 
+private:
+	DailyTransactions DT;
 };
 

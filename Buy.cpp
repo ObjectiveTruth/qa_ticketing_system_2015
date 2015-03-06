@@ -70,6 +70,8 @@ int buyTicket(Account currentUser){
 				if (purchase.compare("yes") == 0)													//If yes
 				{	
 					tickets.remove(ticket.eventName, ticket.sellerName, nOfTickets);					//Remove the tickets from the file
+					DailyTransactions DT;
+					DT.logBuy(ticket.eventName, ticket.sellerName, nOfTickets, ticket.price);			//Add buy log into the daily transaction file
 					cout << "Transaction successfully complete!";
 					bought = 1;
 				}

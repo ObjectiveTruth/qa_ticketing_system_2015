@@ -14,16 +14,21 @@ int getType(string userName){
 //This function make the refund
 //returns false if not work
 //true otherwise
-bool makeRefund(string buyer, string seller, float amount, string eventName, int nOfTickets){
+bool makeRefund(string buyer, string seller, float amount){
 	Accounts acc;
+	DailyTransactions DT;
 	Account buyerAccount = acc.get(buyer);
 	Account sellerAccount = acc.get(seller);
 
 	if (sellerAccount.credit < amount)
 		return false;
 
+	//Update the users
 	acc.update(sellerAccount.username, sellerAccount.credit - amount);
 	acc.update(buyerAccount.username, buyerAccount.credit + amount);
+
+	//And log it into the daily transaction file
+	DT.logRefund(buyer, seller, amount);
 
 	return true;
 }
@@ -65,7 +70,7 @@ int refundUser(Account currentUser){
 				cout << "Enter the total amount:";																	//Keep asking
 			}
 		
-			if (!makeRefund(buyerName, sellerName, totalAmount, "", 0)){											//If can't refund
+			if (!makeRefund(buyerName, sellerName, totalAmount)){													//If can't refund
 				cout << "Error: The seller does not have credit to refund";											//Show error
 				refunded = 0;																						//Return 0
 			}

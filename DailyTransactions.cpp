@@ -94,7 +94,7 @@ int DailyTransactions::logRefund(string buyerName, string sellerName, double ava
     stringstream ss;
     ss << LOG_REFUND_TRANSACTIONCODE << ' ';
     ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
-    ss << setw(BUYERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(BUYERNAME_SIZE) << left << setfill(' ') << sellerName << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
     return returnValue;

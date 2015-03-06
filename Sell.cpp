@@ -39,6 +39,10 @@ int sellTicket(Account currentUser){
 		Tickets ticket = Tickets();
 		ticket.add(eventName, sellerName, nOfTickets, pricePerTicket);
 
+		//Add sell log in the daily transaction file
+		DailyTransactions DT;
+		DT.logSell(eventName, sellerName, nOfTickets, pricePerTicket);
+
 		/*
 			Need to add the constrains here
 		*/

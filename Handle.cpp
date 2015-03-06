@@ -75,6 +75,10 @@ int Handle::refund()
 int Handle::logout()
 {
 	if (currentUser.type != -1){
+		//Log in the file the log out transaction
+		DailyTransactions DT;
+		DT.logEndOfSession(currentUser.username, currentUser.type, currentUser.credit);
+
 		currentUser.type = -1;
 		currentUser.credit = -1;
 		currentUser.username = "";
