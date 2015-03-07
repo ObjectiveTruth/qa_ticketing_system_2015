@@ -13,5 +13,7 @@ const int TICKETS_LOG_SIZE = 3;
 const int TICKETS_PRICE_SIZE = 6;
 const int CREDIT_FLOAT_SIZE = 9;
 const int BUYERNAME_SIZE = 15;
-const int SELLERNAME_SIZE = 15;
+const int SELLER_NAME_SIZE = 15;
 const int EVENT_NAME_SIZE = 19;
+#define TICKET_NUM_SIZE 3
+

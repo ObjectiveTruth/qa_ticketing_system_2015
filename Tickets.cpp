@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Tickets.h"
+#include "constants.cpp"
 
 using namespace std;
 
@@ -16,10 +17,6 @@ using namespace std;
 //add - adds the numeber of tickets to the seller's account
 //remove - removes the tickets from a seller's account
 
-#define EVENTNAME_SIZE 19
-#define SELLERNAME_SIZE 13
-#define TICKET_NUM_SIZE 3
-#define PRICE_SIZE 6
 
 //Helper function to trim the white space from a string starting from 
 //the left and from the right
@@ -46,8 +43,8 @@ string ReadFileTickets(){
 }
 
 //Adds the number of tickets specified for a particular event being sold by 
+//If the record exists, the price argument is ignored
 //sellerName. Returns 1 if successful, 0 if unsuccessful
-
 int Tickets::add(string eventName, string sellerName, int addTickets, double price){
 	string readFromFile = ReadFileTickets();
 	stringstream outputStream;
@@ -58,13 +55,17 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
     int returnValue = 0;
     while (getline(fileInputStream, line)) {
         previousLine = line;
-        suspect = trimLeftRightWhiteSpace(line.substr(0,EVENTNAME_SIZE));
+        suspect = trimLeftRightWhiteSpace(line.substr(0,EVENT_NAME_SIZE));
         if (eventName.compare(suspect) == 0){
-            string sellerNameSuspect = line.substr(EVENTNAME_SIZE + 1, SELLERNAME_SIZE);
+            string sellerNameSuspect = 
+                trimLeftRightWhiteSpace(line.substr(EVENT_NAME_SIZE, SELLER_NAME_SIZE));
             if (sellerName.compare(sellerNameSuspect) == 0){
+                cout << "found here" << endl;
+
                 returnValue = 1;
                 //extracts the number of tickets portion
-                string ticketsAlpha =line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE + 2, 
+                //2 is the total spaces so far
+                string ticketsAlpha =line.substr(EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2, 
                         TICKET_NUM_SIZE); 
                 int oldTicketsNumber = atoi(ticketsAlpha.c_str());
                 //adds the old value with the new value
@@ -73,20 +74,24 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
                 stringstream ss;
                 ss << setw(3) << setfill('0') << finalTicketsNumber;
                 //replaces the line with new value
-                line.replace(EVENTNAME_SIZE + SELLERNAME_SIZE +2, TICKET_NUM_SIZE , 
+                line.replace(EVENT_NAME_SIZE + SELLER_NAME_SIZE +2, TICKET_NUM_SIZE , 
                         ss.str());
-
-                //ADD LOGIC HERE TO UPDAET THE FIELDS
             }
         }
-        outputStream << line;
         if(line.compare("END") != 0){
-            outputStream << endl;
+            outputStream << line << endl;
         }
     }
-    if(previousLine.compare("END") != 0){
-        outputStream << "END";
+    //If the inputted entry doesn't exist in the db, create it
+    if(returnValue == 0){
+        stringstream ss;
+        ss << setw(EVENT_NAME_SIZE) << setfill(' ') << left << eventName << ' ';
+        ss << setw(SELLER_NAME_SIZE) << setfill(' ') << left << sellerName << ' ';
+        ss << setw(TICKET_NUM_SIZE) << setfill('0') << right << addTickets << ' ';
+        ss << setw(TICKETS_PRICE_SIZE) << setfill('0') << right << price * 100 << endl;
+        outputStream << ss.str();
     }
+    outputStream << "END";
 	ofstream myfile;
 	myfile.open("tickets.txt");
 	myfile << outputStream.str();
@@ -103,38 +108,36 @@ int Tickets::remove(string eventName, string sellerName, int removeTickets){
     string line;    
     string suspect;
     string previousLine;
+    int finalTicketsNumber = 0;
     int returnValue = 0;
     while (getline(fileInputStream, line)) {
         previousLine = line;
-        suspect = trimLeftRightWhiteSpace(line.substr(0,EVENTNAME_SIZE));
+        suspect = trimLeftRightWhiteSpace(line.substr(0,EVENT_NAME_SIZE));
         if (eventName.compare(suspect) == 0){
-            string sellerNameSuspect = line.substr(EVENTNAME_SIZE + 1, SELLERNAME_SIZE);
+            string sellerNameSuspect = 
+                trimLeftRightWhiteSpace(line.substr(EVENT_NAME_SIZE, SELLER_NAME_SIZE));
             if (sellerName.compare(sellerNameSuspect) == 0){
                 returnValue = 1;
                 //extracts the number of tickets portion
-                string ticketsAlpha =line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE + 2, 
+                //2 is the total spaces so far
+                string ticketsAlpha =line.substr(EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2, 
                         TICKET_NUM_SIZE); 
                 int oldTicketsNumber = atoi(ticketsAlpha.c_str());
                 //adds the old value with the new value
-                int finalTicketsNumber = oldTicketsNumber - removeTickets;
+                finalTicketsNumber = oldTicketsNumber - removeTickets;
                 //formats it nicely with leading 0s to fill 3 spaces
                 stringstream ss;
                 ss << setw(3) << setfill('0') << finalTicketsNumber;
                 //replaces the line with new value
-                line.replace(EVENTNAME_SIZE + SELLERNAME_SIZE +2, TICKET_NUM_SIZE , 
+                line.replace(EVENT_NAME_SIZE + SELLER_NAME_SIZE +2, TICKET_NUM_SIZE , 
                         ss.str());
-
-                //ADD LOGIC HERE TO UPDAET THE FIELDS
             }
         }
-        outputStream << line;
-        if(line.compare("END") != 0){
-            outputStream << endl;
+        if(line.compare("END") != 0 && finalTicketsNumber > 0){
+            outputStream << line << endl;
         }
     }
-    if(previousLine.compare("END") != 0){
-        outputStream << "END";
-    }
+    outputStream << "END";
 	ofstream myfile;
 	myfile.open("tickets.txt");
 	myfile << outputStream.str();
@@ -158,16 +161,16 @@ Ticket Tickets::getInfo(string eventName, string sellerName){
 
 	if (myfile.is_open()){
 		while (getline(myfile, line)){
-            suspect = trimLeftRightWhiteSpace(line.substr(0,EVENTNAME_SIZE));
+            suspect = trimLeftRightWhiteSpace(line.substr(0,EVENT_NAME_SIZE));
             
 
 			if (eventName.compare(suspect) == 0){
-                string sellerNameSuspect = line.substr(EVENTNAME_SIZE + 1, SELLERNAME_SIZE);
+                string sellerNameSuspect = line.substr(EVENT_NAME_SIZE + 1, SELLER_NAME_SIZE);
                 if (sellerName.compare(sellerNameSuspect) == 0){
-                    string ticketsAlpha =line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE + 2, 
+                    string ticketsAlpha =line.substr(EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2, 
                             TICKET_NUM_SIZE); 
-                    string priceAlpha = line.substr(EVENTNAME_SIZE + SELLERNAME_SIZE
-                            + TICKET_NUM_SIZE + 3, PRICE_SIZE);
+                    string priceAlpha = line.substr(EVENT_NAME_SIZE + SELLER_NAME_SIZE
+                            + TICKET_NUM_SIZE + 3, TICKETS_PRICE_SIZE);
 
                     returnTicket.ticketsLeft = atoi(ticketsAlpha.c_str());
                     returnTicket.eventName = suspect;
@@ -191,9 +194,8 @@ Ticket Tickets::getInfo(string eventName, string sellerName){
 //int main(){
 //
 //    Tickets tickets = Tickets();
-//    tickets.add("Game of Thrones", "Peter Griffin", 1, 2.0);
-//   tickets.remove("East of Eden", "Marrick Port", 1, 2.0);
-//    tickets.getInfo("House of Cards", "Barney Gunble");
+//    //tickets.add("Game of Thrones", "Peter Griffin", 1, 2.48);
+//    tickets.remove("Game of Thrones", "Peter Griffin", 1);
 //
 //    return 0;
 //}
