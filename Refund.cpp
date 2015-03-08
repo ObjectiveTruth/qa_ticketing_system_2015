@@ -14,21 +14,24 @@ int getType(string userName){
 //This function make the refund
 //returns false if not work
 //true otherwise
-bool makeRefund(string buyer, string seller, float amount){
+bool makeTransfer(string to, string from, float amount){
 	Accounts acc;
 	DailyTransactions DT;
-	Account buyerAccount = acc.get(buyer);
-	Account sellerAccount = acc.get(seller);
+	Account buyerAccount = acc.get(to);
+	Account sellerAccount = acc.get(from);
 
 	if (sellerAccount.credit < amount)
 		return false;
 
-	//Update the users
-	acc.update(sellerAccount.username, sellerAccount.credit - amount);
-	acc.update(buyerAccount.username, buyerAccount.credit + amount);
+	if (to != from)		//If the user is not the same, update ======> If user is the same, don't need to update, because the value will be the same
+	{
+		//Update the users
+		acc.update(sellerAccount.username, sellerAccount.credit - amount);
+		acc.update(buyerAccount.username, buyerAccount.credit + amount);
+	}
 
 	//And log it into the daily transaction file
-	DT.logRefund(buyer, seller, amount);
+	DT.logRefund(to, from, amount);
 
 	return true;
 }
@@ -46,7 +49,8 @@ int refundUser(Account currentUser){
 	}
 
 	cout << "Enter the buyer username:";																			//Get the buyer name
-	cin >> buyerName;
+	cin.ignore();								//Ignore the '\n'
+	getline(cin, buyerName);						//And get the hole line
 
 	userType = getType(buyerName);																					//Get the buyer type
 
@@ -56,7 +60,8 @@ int refundUser(Account currentUser){
 	}
 	else{																											//If buyer is okay
 		cout << "Enter the seller username:";																		//Ask for the seller name
-		cin >> sellerName;
+		cin.clear();									//Ignore the '\n'
+		getline(cin, sellerName);						//And get the hole line
 
 		userType = getType(sellerName);																				//Get the seller type
 
@@ -70,7 +75,7 @@ int refundUser(Account currentUser){
 				cout << "Enter the total amount:";																	//Keep asking
 			}
 		
-			if (!makeRefund(buyerName, sellerName, totalAmount)){													//If can't refund
+			if (!makeTransfer(buyerName, sellerName, totalAmount)){													//If can't refund
 				cout << "Error: The seller does not have credit to refund";											//Show error
 				refunded = 0;																						//Return 0
 			}

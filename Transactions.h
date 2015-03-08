@@ -31,6 +31,7 @@ bool addtouser();
 
 //Refund functions
 int refundUser(Account currentUser);
+bool makeTransfer(string to, string from, float amount);
 
 //Login functions
 int loginUser(Handle *currentHandle);

@@ -68,8 +68,19 @@ bool checkAmount(float *amount)
 		cout << "ERROR: Please enter the value in the format: XX.XX\n";
 		cin.clear();
 		cin.ignore(256, '\n');
-		return false;
 	}
-	else
-		return true;
+	else{
+		//Check constrains
+		if (*amount < 0)
+		{
+			cout << "The amount need to be positive and greater than 0" << endl;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	return false;
+		
 }

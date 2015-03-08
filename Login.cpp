@@ -22,7 +22,8 @@ int loginUser(Handle *currentHandle)
 	}
 		
 	cout << "Enter Username:";													//Get the user name
-	cin >> userName;
+	cin.ignore();								//Ignore the '\n'
+	getline(cin, userName);						//And get the hole line
 
 	if (checkIfUsernameExist(userName)){										//Check if the user exists, if yes
 		handle.setCurrentUser(acc.get(userName));								//Set as the current user

@@ -49,7 +49,7 @@ int DailyTransactions::logCreate(string buyerName, int userType, double availabl
     int returnValue = 1;
     stringstream ss;
     ss << LOG_CREATE_TRANSACTIONCODE << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
     ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -60,7 +60,7 @@ int DailyTransactions::logDelete(string buyerName, int userType, double availabl
     int returnValue = 1;
     stringstream ss;
     ss << LOG_DELETE_TRANSACTIONCODE << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
     ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -71,7 +71,7 @@ int DailyTransactions::logAddCredit(string buyerName, int userType, double avail
     int returnValue = 1;
     stringstream ss;
     ss << LOG_ADD_CREDIT_TRANSACTIONCODE << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
     ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -82,7 +82,7 @@ int DailyTransactions::logEndOfSession(string buyerName, int userType, double av
     int returnValue = 1;
     stringstream ss;
     ss << LOG_END_OF_SESSION_TRANSACTIONCODE << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
     ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -93,7 +93,7 @@ int DailyTransactions::logRefund(string buyerName, string sellerName, double ava
     int returnValue = 1;
     stringstream ss;
     ss << LOG_REFUND_TRANSACTIONCODE << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << buyerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
     ss << setw(BUYERNAME_SIZE) << left << setfill(' ') << sellerName << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -105,7 +105,7 @@ int DailyTransactions::logSell(string eventName, string sellerName,int tickets, 
     stringstream ss;
     ss << LOG_SELL_TRANSACTIONCODE << ' ';
     ss << setw(EVENT_NAME_SIZE) << left << setfill(' ') << eventName << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << sellerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << sellerName << ' ';
     ss << setw(TICKETS_LOG_SIZE) << setfill('0') << right << tickets << ' ';
     ss << setw(TICKETS_PRICE_SIZE) << setfill('0') << right << ticketPrice * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
@@ -117,7 +117,7 @@ int DailyTransactions::logBuy(string eventName, string sellerName,int tickets, d
     stringstream ss;
     ss << LOG_BUY_TRANSACTIONCODE << ' ';
     ss << setw(EVENT_NAME_SIZE) << left << setfill(' ') << eventName << ' ';
-    ss << setw(SELLERNAME_SIZE) << left << setfill(' ') << sellerName << ' ';
+    ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << sellerName << ' ';
     ss << setw(TICKETS_LOG_SIZE) << setfill('0') << right << tickets << ' ';
     ss << setw(TICKETS_PRICE_SIZE) << setfill('0') << right << ticketPrice * 100 << endl;
     addToEndOfDailyTransactions(ss.str());

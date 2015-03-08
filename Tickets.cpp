@@ -86,7 +86,7 @@ int Tickets::add(string eventName, string sellerName, int addTickets, double pri
     if(returnValue == 0){
         stringstream ss;
         ss << setw(EVENT_NAME_SIZE) << setfill(' ') << left << eventName << ' ';
-        ss << setw(SELLER_NAME_SIZE) << setfill(' ') << left << sellerName << ' ';
+		ss << setw(SELLER_NAME_SIZE) << setfill(' ') << left << sellerName << ' ';
         ss << setw(TICKET_NUM_SIZE) << setfill('0') << right << addTickets << ' ';
         ss << setw(TICKETS_PRICE_SIZE) << setfill('0') << right << price * 100 << endl;
         outputStream << ss.str();
@@ -165,7 +165,7 @@ Ticket Tickets::getInfo(string eventName, string sellerName){
             
 
 			if (eventName.compare(suspect) == 0){
-                string sellerNameSuspect = line.substr(EVENT_NAME_SIZE + 1, SELLER_NAME_SIZE);
+				string sellerNameSuspect = trimLeftRightWhiteSpace(line.substr(EVENT_NAME_SIZE + 1, SELLER_NAME_SIZE));
                 if (sellerName.compare(sellerNameSuspect) == 0){
                     string ticketsAlpha =line.substr(EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2, 
                             TICKET_NUM_SIZE); 

@@ -22,6 +22,12 @@ int main()
 	while (command.compare("exit") != 0)
 	{
 
+		//Always refresh the current user after each transaction
+		handle.setCurrentUser(accountsDB.get(handle.getCurrentUser().username));
+		//cout << handle.getCurrentUser().username << endl;
+		//cout << handle.getCurrentUser().type << endl;
+		//cout << handle.getCurrentUser().credit << endl;
+
 		cout << "\n" << endl;
 		cout << "Enter your command:-> ";
 		cin >> command;

@@ -46,6 +46,9 @@ int buyTicket(Account currentUser){
 			Tickets tickets = Tickets();
 			ticket = tickets.getInfo(eventName, sellerName);
 
+			cout << eventName << endl;
+			cout << sellerName << endl;
+
 			if (ticket.eventName.empty()){																//If the eventName after get the info from the file is empty
 				cout << "Sorry, we can not find what you are looking for!" << endl;						//Means that we cannot find it
 				cout << "The event or seller does not exist";											//Because event or seller does not exist
@@ -69,11 +72,23 @@ int buyTicket(Account currentUser){
 
 				if (purchase.compare("yes") == 0)													//If yes
 				{	
-					tickets.remove(ticket.eventName, ticket.sellerName, nOfTickets);					//Remove the tickets from the file
-					DailyTransactions DT;
-					DT.logBuy(ticket.eventName, ticket.sellerName, nOfTickets, ticket.price);			//Add buy log into the daily transaction file
-					cout << "Transaction successfully complete!";
-					bought = 1;
+					if (currentUser.credit < nOfTickets*ticket.price)
+					{
+						cout << "Ops! Perhaps you don't have enough money. Please refuel yourself first!";
+					}
+					else
+					{
+						//Variables to seal the deal
+						DailyTransactions DT;
+						Handle handler;
+
+						tickets.remove(ticket.eventName, ticket.sellerName, nOfTickets);					//Remove the tickets from the file
+						makeTransfer(sellerName, currentUser.username, nOfTickets*ticket.price);			//Transfer the money
+						
+						DT.logBuy(ticket.eventName, ticket.sellerName, nOfTickets, ticket.price);			//Add buy log into the daily transaction file
+						cout << "Transaction successfully complete!";
+						bought = 1;
+					}
 				}
 				else{																				//If no
 					cout << "Transaction canceled!";													//Cancel transaction
