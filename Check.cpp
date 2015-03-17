@@ -71,7 +71,7 @@ bool checkAmount(float *amount)
 	}
 	else{
 		//Check constrains
-		if (*amount < 0)
+		if (*amount <= 0)
 		{
 			cout << "The amount need to be positive and greater than 0" << endl;
 		}

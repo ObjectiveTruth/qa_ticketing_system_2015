@@ -27,7 +27,10 @@ int createUser(Account currentUser)
 			cout << "Error: Username Already Exist!";		//Tell the user
 			created = 0;									//And cancel the transaction
 		}
-
+		else if (userName.length() < 3 || userName.length() > 15){
+			cout << "Error: Username should have between 3-15 chars!";
+			created = 0;
+		}
 		else{												//But if the user exist
 			if (!checkIfTypeExist(&userType)){				//Check the type, but if do not exist
 				cout << "Error: This Type Do Not Exist";	//Tell the user
