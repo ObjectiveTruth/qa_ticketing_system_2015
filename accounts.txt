@@ -1,5 +1,0 @@
-miguel,1,800
-jose,10,50.15
-mendez,2,502
-gui,1,4611
-Seller I,3,1500
