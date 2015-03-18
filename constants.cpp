@@ -16,4 +16,6 @@ const int BUYERNAME_SIZE = 15;
 const int SELLER_NAME_SIZE = 15;
 const int EVENT_NAME_SIZE = 19;
 #define TICKET_NUM_SIZE 3
+const int USERNAME_SIZE = 15;
+const int USER_TYPE_SIZE = 2;
 
