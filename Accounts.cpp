@@ -139,7 +139,7 @@ int Accounts::update(string username, double credit){
 	myfile.close();
 
 	account = acc.get(username);
-	DT.logAddCredit(account.username, account.type, account.credit);		//Log the addcredit in the daily transaction file
+	//DT.logAddCredit(account.username, account.type, account.credit);		//Log the addcredit in the daily transaction file
 
 	return returnValue;
 }
@@ -172,7 +172,7 @@ int Accounts::create(string username, int type, double credit){
     myfile << ss.str();
     myfile << END;
 	myfile.close();
-	DT.logCreate(username, type, credit);							//Log the create in the daily transaction file
+	//DT.logCreate(username, type, credit);							//Log the create in the daily transaction file
     return returnValue;
 }
 
@@ -213,20 +213,19 @@ int Accounts::remove(string username){
 	account = acc.get(username);
 	myfile.close();
 
-	DT.logDelete(account.username,account.type,account.credit);		//Log the delete in the daily transaction file
+	//DT.logDelete(account.username,account.type,account.credit);		//Log the delete in the daily transaction file
 
 	return returnValue;
 }
 
-//int main(){
-//    Accounts accounts = Accounts();
-//    //accounts.create("me", 1, 100.34);
-//    Account me = accounts.get("me");
-//    cout << me.username << endl;
-//    cout << me.credit << endl;
-//    cout << me.type << endl;
-//    accounts.update("me", 200);
-//    accounts.remove("me");
-//    return 0;
-//
-//}
+int main(){
+    Accounts accounts = Accounts();
+    accounts.create("objectivetruth", 1, 100.34);
+    Account me = accounts.get("me");
+    cout << me.username << endl;
+    cout << me.credit << endl;
+    cout << me.type << endl;
+    accounts.update("me", 200);
+    return 0;
+
+}

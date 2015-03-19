@@ -4,6 +4,7 @@
 DailyTransactions.txt
 tickets.txt
 accounts.txt
+error_log.txt
 
 ### Vim ###
 [._]*.s[a-w][a-z]

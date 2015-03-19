@@ -1,0 +1,38 @@
+ERROR: Username: bt already exists. Didn't get added
+ERROR: Username: username doesn't exist. Didn't delete
+ERROR: Username: username doesn't exist. No credit Added
+ERROR: Refunder: buyer not found. Refund NOT applied
+ERROR: Username: username doesn't exist. No credit Added
+ERROR: Refunder: buyer not found. Refund NOT applied
+ERROR: Cannot give a credit to ramires of over 1000.00$ for this session. Credit Not added
+ERROR: Username: miguel doesn't exist. No credit Added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Credit taken from gui will be < 0 (not allowed)
+ERROR: Username: miguel doesn't exist. No credit Added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Refunder: gui found. Refundee: miguel not found. Refund NOT applied
+ERROR: Username: miguel doesn't exist. No credit Added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Credit taken from gui will be < 0 (not allowed)
+ERROR: Username: miguel doesn't exist. No credit Added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Refunder: gui found. Refundee: miguel not found. Refund NOT applied
+ERROR: Eventname: Game of Thrones, and Sellername: Peter Griffin can't be found. Buy not applied
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Refunder: gui found. Refundee: Seller I not found. Refund NOT applied
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Credit taken from gui will be < 0 (not allowed)
+ERROR: Username: miguel doesn't exist. No credit Added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Refunder: gui found. Refundee: miguel not found. Refund NOT applied
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added
+ERROR: Cannot give a credit to gui of over 1000.00$ for this session. Credit Not added

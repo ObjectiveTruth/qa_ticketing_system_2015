@@ -1,0 +1,7 @@
+Alladin II          gui             002 009000
+Metal Gear          Seller I        110 004500
+Anaconda III        gui             040 002500
+test                gui             020 000200
+EVENT_NAME          seller          082 013400
+Test_Event          gui             020 003500
+END

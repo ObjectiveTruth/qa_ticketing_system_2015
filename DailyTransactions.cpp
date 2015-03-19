@@ -50,7 +50,7 @@ int DailyTransactions::logCreate(string buyerName, int userType, double availabl
     stringstream ss;
     ss << LOG_CREATE_TRANSACTIONCODE << ' ';
     ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
-    ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
+    ss << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
     return returnValue;
@@ -61,7 +61,7 @@ int DailyTransactions::logDelete(string buyerName, int userType, double availabl
     stringstream ss;
     ss << LOG_DELETE_TRANSACTIONCODE << ' ';
     ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
-    ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
+    ss << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
     return returnValue;
@@ -72,7 +72,7 @@ int DailyTransactions::logAddCredit(string buyerName, int userType, double avail
     stringstream ss;
     ss << LOG_ADD_CREDIT_TRANSACTIONCODE << ' ';
     ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
-    ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
+    ss << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
     return returnValue;
@@ -83,7 +83,7 @@ int DailyTransactions::logEndOfSession(string buyerName, int userType, double av
     stringstream ss;
     ss << LOG_END_OF_SESSION_TRANSACTIONCODE << ' ';
     ss << setw(SELLER_NAME_SIZE) << left << setfill(' ') << buyerName << ' ';
-    ss << ' ' << userTypeIntToStringConverter(userType) << ' ';
+    ss << userTypeIntToStringConverter(userType) << ' ';
     ss << setw(CREDIT_FLOAT_SIZE) << setfill('0') << right << availableCredit * 100 << endl;
     addToEndOfDailyTransactions(ss.str());
     return returnValue;
