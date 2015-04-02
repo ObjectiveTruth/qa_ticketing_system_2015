@@ -378,8 +378,11 @@ class backend {
 
                         //Substract the new from the old to see how much was added
                         //If its over 1000.00 before end of session call, then Fail
-                        float creditDeltaThisTransaction =  newUserCreditFloat - oldUserCreditFloat;
+                        float creditDeltaThisTransaction =  newUserCreditFloat + oldUserCreditFloat;
                         float creditDeltaOverall = creditDeltaThisTransaction + creditPerSession;
+
+                        //Turn the delta value back to string for writting
+                        String creditDeltaThisTransactionString = String.format("%0" + CREDIT_FLOAT_SIZE + "d", (int)(creditDeltaThisTransaction * 100));
                         //If the overall credit added for this session is over 1000.00f then fail
                         //Otherwise, make the change to this user's entry before adding to Arraylist
                         if(creditDeltaOverall > 1000.00f){
@@ -387,7 +390,8 @@ class backend {
                         }else{
                             //Update the creditPerSession to know how much as been added
                             creditPerSession = creditDeltaOverall;
-                            line = line.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + newUserCredit;
+                            line = line.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + 
+                                creditDeltaThisTransactionString;
                         }
 
                     }
