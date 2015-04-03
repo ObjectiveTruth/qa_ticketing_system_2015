@@ -85,56 +85,57 @@ class backend {
         try (BufferedReader br = new BufferedReader(new FileReader(mergedDTFilename))) {
             String returnedErrorStatus = null;
             String line;
+            int lineNumber = 0;
             while ((line = br.readLine()) != null) {
+                lineNumber++;
                 //switch on the transaction type before doing the changes
                 String type = line.substring(0, 2);
                 switch (type) {
                     case LOG_CREATE_TRANSACTIONCODE:
                         returnedErrorStatus = CreateDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
 
                     case LOG_DELETE_TRANSACTIONCODE:
                         returnedErrorStatus = DeleteDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     case LOG_ADD_CREDIT_TRANSACTIONCODE:
                         returnedErrorStatus = AddCreditDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     case LOG_END_OF_SESSION_TRANSACTIONCODE:
                         returnedErrorStatus = EndOfSessionDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     case LOG_REFUND_TRANSACTIONCODE:
                         returnedErrorStatus = RefundDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     case LOG_SELL_TRANSACTIONCODE:
                         returnedErrorStatus = BuySellDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     case LOG_BUY_TRANSACTIONCODE:
                         returnedErrorStatus = BuySellDT(line);
                         if(returnedErrorStatus != null){
-                            ErrorWriter(returnedErrorStatus);
+                            ErrorWriter(returnedErrorStatus, lineNumber);
                         }
                         break;
                     default:
-                        System.out.println("TransactionType not found");
-
+                        ErrorWriter("Transaction Type not found in line", lineNumber);
                 }
             }
         }catch(Exception e){
@@ -144,11 +145,11 @@ class backend {
 
     //Helper Function for appending error messages to ERROR_LOG_FILENAME
     //Returns true if succedded in writing, false if failed
-    static boolean ErrorWriter(String errorMessage){
+    static boolean ErrorWriter(String errorMessage, int lineNumber){
         try{
             FileWriter fw = new FileWriter(new File(ERROR_LOG_FILENAME), true);
             BufferedWriter out = new BufferedWriter(fw);
-            out.write("ERROR: " + errorMessage + '\n');
+            out.write("ERROR(line:" + lineNumber + ") " + errorMessage + '\n');
             out.flush();
             out.close();
         }catch(Exception e){
@@ -174,17 +175,24 @@ class backend {
         //Initialize where the lines will be stored before writing
         List<String> outputLines = new ArrayList<String>();
 
-        //Find the eventName and sellerName field from the line provided and trim whitespace with trim()
-        String untrimmedEventName = DTline.substring(USER_TYPE_SIZE + 1, USER_TYPE_SIZE + 1 + EVENT_NAME_SIZE);
+        //Find the eventName and sellerName field from the 
+        //line provided and trim whitespace with trim()
+        String untrimmedEventName = DTline.substring(USER_TYPE_SIZE + 1, 
+                USER_TYPE_SIZE + 1 + EVENT_NAME_SIZE);
         String eventNameSearch = untrimmedEventName.trim();
-        String untrimmedSellerName = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + 2, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2);
+        String untrimmedSellerName = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + 2, 
+                USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2);
         String sellerNameSearch = untrimmedSellerName.trim();
 
         //Find the new number of tickets from line provided
-        String newTicketsToApply = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + 3, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + 3);
+        String newTicketsToApply = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + 
+                SELLER_NAME_SIZE + 3, USER_TYPE_SIZE + EVENT_NAME_SIZE + 
+                SELLER_NAME_SIZE + TICKET_NUM_SIZE + 3);
 
         //Find the new price of tickets from line provided
-        String newPrice = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + 4, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + TICKETS_PRICE_SIZE + 4);
+        String newPrice = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + 
+                SELLER_NAME_SIZE + TICKET_NUM_SIZE + 4, USER_TYPE_SIZE + 
+                EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + TICKETS_PRICE_SIZE + 4);
 
         try (BufferedReader br = new BufferedReader(new FileReader(NEW_TICKETS_FILENAME))) {
             String line;
@@ -194,7 +202,8 @@ class backend {
                 //check if the line is NOT the end
                 if(line.length() > EVENT_NAME_SIZE){
                     String eventNameSuspect = (line.substring(0, EVENT_NAME_SIZE)).trim();
-                    String sellerNameSuspect = (line.substring(EVENT_NAME_SIZE + 1, EVENT_NAME_SIZE + SELLER_NAME_SIZE + 1)).trim();
+                    String sellerNameSuspect = (line.substring(EVENT_NAME_SIZE + 1, 
+                                EVENT_NAME_SIZE + SELLER_NAME_SIZE + 1)).trim();
                     //If event and seller exists, then modify it by manipulating tickets #
                     //Take it and store in ArrayList
                     if(eventNameSearch.equals(eventNameSuspect) && sellerNameSearch.equals(sellerNameSuspect)){
@@ -265,16 +274,18 @@ class backend {
         List<String> outputLines = new ArrayList<String>();
 
         //Find the username and refundee field from the line provided and trim whitespace with trim()
-        String refundeeSearch = DTline.substring(USER_TYPE_SIZE + 
+        String untrimmedRefundee = DTline.substring(USER_TYPE_SIZE + 
                 1, USER_TYPE_SIZE + 1 + USERNAME_SIZE);
-        String untrimmedRefundeeField = DTline.substring(USER_TYPE_SIZE + 
+        String untrimmedRefunder = DTline.substring(USER_TYPE_SIZE + 
                 BUYERNAME_SIZE + 2, USER_TYPE_SIZE + BUYERNAME_SIZE + 
                 SELLER_NAME_SIZE + 2);
-        String untrimmedUsernameFiled = untrimmedRefundeeField.trim();
-        String usernameSearch = untrimmedUsernameFiled.trim();
+        String refundeeSearch = untrimmedRefundee.trim();
+        String refunderSearch = untrimmedRefunder.trim();
 
         //get the new credit to be change applied
-        String refundAmount = DTline.substring(LOG_TYPE_SIZE + BUYERNAME_SIZE + SELLER_NAME_SIZE + 3, LOG_TYPE_SIZE + BUYERNAME_SIZE + SELLER_NAME_SIZE + CREDIT_FLOAT_SIZE + 3);
+        String refundAmount = DTline.substring(LOG_TYPE_SIZE + BUYERNAME_SIZE + 
+                SELLER_NAME_SIZE + 3, LOG_TYPE_SIZE + BUYERNAME_SIZE + 
+                SELLER_NAME_SIZE + CREDIT_FLOAT_SIZE + 3);
         //Divide by 100 to normalize to real float
         float refundAmountFloat = Float.parseFloat(refundAmount)/100;
 
@@ -288,7 +299,7 @@ class backend {
                     String usernameSuspect = (line.substring(0, USERNAME_SIZE)).trim();
                     //If username exists, then modify it by replacing it with the refund value 
                     //substracted and store it in the ArrayList
-                    if(usernameSearch.equalsIgnoreCase(usernameSuspect)){
+                    if(refunderSearch.equalsIgnoreCase(usernameSuspect)){
                         isFound = true;
                         //Find the old credit amount
                         String oldUserCredit = line.substring(USERNAME_SIZE + 2 + USER_TYPE_SIZE, USERNAME_SIZE + 2 + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE);
@@ -300,7 +311,7 @@ class backend {
 
                         //if newCredit amount is < 0 then return error
                         if(newCreditAmount < 0){
-                            return "Credit taken from " + usernameSearch + " will be < 0 (not allowed)";
+                            return "Credit taken from " + refunderSearch + " will be < 0 (not allowed)";
                         }
                         //Update the creditPerSession to know how much as been added
                         line = line.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + String.format("%0" + CREDIT_FLOAT_SIZE + "d", (int)(newCreditAmount * 100));
@@ -314,7 +325,7 @@ class backend {
         }
         //If the refunder is not found return an error message
         if(!isFound){
-            return "Refunder: " + usernameSearch + " not found. Refund NOT applied";
+            return "Refunder: " + refunderSearch + " not found. Refund NOT applied";
         }
         //Reset isFound to false to start a new search for refundee
         isFound = false;
@@ -340,7 +351,7 @@ class backend {
 
         //If the refundee wasn't found, but refunder was, send back error message
         if(!isFound){
-            return "Refunder: " + usernameSearch + " found. Refundee: " + refundeeSearch + " not found. Refund NOT applied";
+            return "Refunder: " + refunderSearch + " found. Refundee: " + refundeeSearch + " not found. Refund NOT applied";
         }
 
         //Passed all the checks and we're now ready to write the file
@@ -527,8 +538,11 @@ class backend {
             e.printStackTrace(System.out);
         }
         //Cut up the original line to get the required info to add to new accounts.txt
-        String usernameType = DTline.substring(LOG_TYPE_SIZE + USERNAME_SIZE + 2, LOG_TYPE_SIZE + USERNAME_SIZE + 2 + USER_TYPE_SIZE);
-        String userCredit = DTline.substring(LOG_TYPE_SIZE + USERNAME_SIZE + USER_TYPE_SIZE + 3, LOG_TYPE_SIZE + USERNAME_SIZE + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE + 3);
+        String usernameType = DTline.substring(LOG_TYPE_SIZE + USERNAME_SIZE + 2, 
+                LOG_TYPE_SIZE + USERNAME_SIZE + 2 + USER_TYPE_SIZE);
+        String userCredit = DTline.substring(LOG_TYPE_SIZE + USERNAME_SIZE + 
+                USER_TYPE_SIZE + 3, LOG_TYPE_SIZE + USERNAME_SIZE + USER_TYPE_SIZE + 
+                CREDIT_FLOAT_SIZE + 3);
 
         String newUserInfoLine = untrimmedUsernameFiled + ' ' + usernameType + ' ' + userCredit + '\n';
 
