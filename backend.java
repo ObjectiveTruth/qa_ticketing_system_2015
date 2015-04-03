@@ -127,7 +127,6 @@ class backend {
                         }
                         break;
                     case LOG_BUY_TRANSACTIONCODE:
-                        System.out.println("LOG_BUY");
                         returnedErrorStatus = BuySellDT(line);
                         if(returnedErrorStatus != null){
                             ErrorWriter(returnedErrorStatus);
@@ -166,6 +165,11 @@ class backend {
     static String BuySellDT(String DTline){
         //Initialize the isFound flag to false
         boolean isFound = false;
+        boolean isBuy = false;
+
+        if(DTline.startsWith(LOG_BUY_TRANSACTIONCODE)){
+            isBuy = true;
+        }
 
         //Initialize where the lines will be stored before writing
         List<String> outputLines = new ArrayList<String>();
@@ -177,7 +181,7 @@ class backend {
         String sellerNameSearch = untrimmedSellerName.trim();
 
         //Find the new number of tickets from line provided
-        String newTicketAmount = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + 3, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + 3);
+        String newTicketsToApply = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + 3, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + 3);
 
         //Find the new price of tickets from line provided
         String newPrice = DTline.substring(USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + 4, USER_TYPE_SIZE + EVENT_NAME_SIZE + SELLER_NAME_SIZE + TICKET_NUM_SIZE + TICKETS_PRICE_SIZE + 4);
@@ -194,8 +198,23 @@ class backend {
                     //If event and seller exists, then modify it by manipulating tickets #
                     //Take it and store in ArrayList
                     if(eventNameSearch.equals(eventNameSuspect) && sellerNameSearch.equals(sellerNameSuspect)){
+                        //Add the new tickets being sold to old tickets before writing
+                        //or if its buy, substract
+                        int newTicketsInt = Integer.parseInt(newTicketsToApply);
+                        String oldTickets = line.substring(EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2,
+                            EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2 + TICKET_NUM_SIZE);
+                        int oldTicketsInt = Integer.parseInt(oldTickets);
+                        int finalTicketEntry = 0;
+                        
+                        if(isBuy){
+                            finalTicketEntry = oldTicketsInt - newTicketsInt;
+                        }else{
+                            finalTicketEntry = oldTicketsInt + newTicketsInt;
+                        }
                         isFound = true;
-                        line = line.substring(0, EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2) + newTicketAmount + ' ' + newPrice;
+                        line = line.substring(0, EVENT_NAME_SIZE + SELLER_NAME_SIZE + 2) + 
+                            String.format("%0" + TICKET_NUM_SIZE + "d", finalTicketEntry) + 
+                            ' ' + newPrice;
                     }
                     //Add the line modified or not to the ArrayList if NOT "END" as above
                     outputLines.add(line + '\n');
@@ -211,7 +230,7 @@ class backend {
             if(DTline.startsWith(LOG_BUY_TRANSACTIONCODE)){
                 return "Eventname: " + eventNameSearch + ", and Sellername: " + sellerNameSearch + " can't be found. Buy not applied";
             }else{
-                String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + ' ' + newTicketAmount + ' ' + newPrice;
+                String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + ' ' + newTicketsToApply + ' ' + newPrice;
                 outputLines.add(newTicketEntry + '\n');
             }
         }
@@ -246,10 +265,13 @@ class backend {
         List<String> outputLines = new ArrayList<String>();
 
         //Find the username and refundee field from the line provided and trim whitespace with trim()
-        String untrimmedUsernameFiled = DTline.substring(USER_TYPE_SIZE + 1, USER_TYPE_SIZE + 1 + USERNAME_SIZE);
+        String refundeeSearch = DTline.substring(USER_TYPE_SIZE + 
+                1, USER_TYPE_SIZE + 1 + USERNAME_SIZE);
+        String untrimmedRefundeeField = DTline.substring(USER_TYPE_SIZE + 
+                BUYERNAME_SIZE + 2, USER_TYPE_SIZE + BUYERNAME_SIZE + 
+                SELLER_NAME_SIZE + 2);
+        String untrimmedUsernameFiled = untrimmedRefundeeField.trim();
         String usernameSearch = untrimmedUsernameFiled.trim();
-        String untrimmedRefundeeField = DTline.substring(USER_TYPE_SIZE + BUYERNAME_SIZE + 2, USER_TYPE_SIZE + BUYERNAME_SIZE + SELLER_NAME_SIZE + 2);
-        String refundeeSearch = untrimmedRefundeeField.trim();
 
         //get the new credit to be change applied
         String refundAmount = DTline.substring(LOG_TYPE_SIZE + BUYERNAME_SIZE + SELLER_NAME_SIZE + 3, LOG_TYPE_SIZE + BUYERNAME_SIZE + SELLER_NAME_SIZE + CREDIT_FLOAT_SIZE + 3);
