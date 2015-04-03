@@ -206,7 +206,8 @@ class backend {
                                 EVENT_NAME_SIZE + SELLER_NAME_SIZE + 1)).trim();
                     //If event and seller exists, then modify it by manipulating tickets #
                     //Take it and store in ArrayList
-                    if(eventNameSearch.equals(eventNameSuspect) && sellerNameSearch.equals(sellerNameSuspect)){
+                    if(eventNameSearch.equals(eventNameSuspect) && 
+                            sellerNameSearch.equals(sellerNameSuspect)){
                         //Add the new tickets being sold to old tickets before writing
                         //or if its buy, substract
                         int newTicketsInt = Integer.parseInt(newTicketsToApply);
@@ -236,11 +237,13 @@ class backend {
         //If the eventname/sellername combitionation is not found for buy, fail. If its for sell, add it
         //to end of the file
         if(!isFound){
-            if(DTline.startsWith(LOG_BUY_TRANSACTIONCODE)){
-                return "Eventname: " + eventNameSearch + ", and Sellername: " + sellerNameSearch + " can't be found. Buy not applied";
+            if(isBuy){
+                return "Eventname: " + eventNameSearch + ", and Sellername: " 
+                    + sellerNameSearch + " can't be found. Buy not applied";
             }else{
-                String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + ' ' + newTicketsToApply + ' ' + newPrice;
-                outputLines.add(newTicketEntry + '\n');
+                String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + 
+                    ' ' + newTicketsToApply + ' ' + newPrice + '\n';
+                outputLines.add(newTicketEntry);
             }
         }
 
@@ -302,7 +305,8 @@ class backend {
                     if(refunderSearch.equalsIgnoreCase(usernameSuspect)){
                         isFound = true;
                         //Find the old credit amount
-                        String oldUserCredit = line.substring(USERNAME_SIZE + 2 + USER_TYPE_SIZE, USERNAME_SIZE + 2 + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE);
+                        String oldUserCredit = line.substring(USERNAME_SIZE + 2 + USER_TYPE_SIZE, 
+                                USERNAME_SIZE + 2 + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE);
                         //Divide by 100 to normalize from the string float to real float
                         float oldUserCreditFloat = Float.parseFloat(oldUserCredit)/100;
 
@@ -314,7 +318,8 @@ class backend {
                             return "Credit taken from " + refunderSearch + " will be < 0 (not allowed)";
                         }
                         //Update the creditPerSession to know how much as been added
-                        line = line.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + String.format("%0" + CREDIT_FLOAT_SIZE + "d", (int)(newCreditAmount * 100));
+                        line = line.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + 
+                            String.format("%0" + CREDIT_FLOAT_SIZE + "d", (int)(newCreditAmount * 100));
                     }
                     //Add the line modified or not to the ArrayList if NOT "END" as above
                     outputLines.add(line + '\n');
@@ -330,28 +335,35 @@ class backend {
         //Reset isFound to false to start a new search for refundee
         isFound = false;
 
+        int outputLinesLength = outputLines.size();
+
         //Iterate through the file represented as an ArrayList and find the refundee
-        for(String lineFromArray : outputLines){
+        for(int i = 0; i < outputLinesLength; i++){
+            String lineFromArray = outputLines.get(i);
             //Find the username at that line and trim whitespace
             String usernameSuspect = (lineFromArray.substring(0, USERNAME_SIZE)).trim();
             //Compare it to the refundeed to find if it exists
             if(lineFromArray.length() > USERNAME_SIZE && refundeeSearch.equals(usernameSuspect)){
                 isFound = true;
                 //Find the old credit amount
-                String oldUserCredit = lineFromArray.substring(USERNAME_SIZE + 2 + USER_TYPE_SIZE, USERNAME_SIZE + 2 + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE);
+                String oldUserCredit = lineFromArray.substring(USERNAME_SIZE + 2 + USER_TYPE_SIZE, 
+                        USERNAME_SIZE + 2 + USER_TYPE_SIZE + CREDIT_FLOAT_SIZE);
                 //Divide by 100 to normalize from the string float to real float
                 float oldUserCreditFloat = Float.parseFloat(oldUserCredit)/100;
 
                 //Substract the new from the old to see the new final amount
                 float newCreditAmount = oldUserCreditFloat + refundAmountFloat;
                 //Update the creditPerSession to know how much as been added
-                lineFromArray = lineFromArray.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) + String.format("%0" + CREDIT_FLOAT_SIZE + "d", (int)(newCreditAmount * 100));
+                lineFromArray = lineFromArray.substring(0, USERNAME_SIZE + USER_TYPE_SIZE + 2) +
+                    String.format("%0" + CREDIT_FLOAT_SIZE + "d%n", (int)(newCreditAmount * 100));
+                outputLines.set(i, lineFromArray);
             }
         }
 
         //If the refundee wasn't found, but refunder was, send back error message
         if(!isFound){
-            return "Refunder: " + refunderSearch + " found. Refundee: " + refundeeSearch + " not found. Refund NOT applied";
+            return "Refunder: " + refunderSearch + " found. Refundee: " + refundeeSearch + 
+                " not found. Refund NOT applied";
         }
 
         //Passed all the checks and we're now ready to write the file
