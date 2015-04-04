@@ -166,11 +166,7 @@ class backend {
     static String BuySellDT(String DTline){
         //Initialize the isFound flag to false
         boolean isFound = false;
-        boolean isBuy = false;
-
-        if(DTline.startsWith(LOG_BUY_TRANSACTIONCODE)){
-            isBuy = true;
-        }
+        boolean isBuy = (DTline.startsWith(LOG_BUY_TRANSACTIONCODE)) ? true : false;
 
         //Initialize where the lines will be stored before writing
         List<String> outputLines = new ArrayList<String>();
@@ -241,9 +237,28 @@ class backend {
                 return "Eventname: " + eventNameSearch + ", and Sellername: " 
                     + sellerNameSearch + " can't be found. Buy not applied";
             }else{
-                String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + 
-                    ' ' + newTicketsToApply + ' ' + newPrice + '\n';
-                outputLines.add(newTicketEntry);
+                boolean isSellerPresent = false;
+                try (BufferedReader br = new BufferedReader(new FileReader(NEW_ACCOUNTS_FILENAME))) {
+                    isSellerPresent = false;
+                    String line;
+                    //Iterate through all the lines of the new_accounts to see if seller Buyer exists
+                    while ((line = br.readLine()) != null && line.length() > 3) {
+                        String usernameSuspect = (line.substring(0, USERNAME_SIZE)).trim();
+                        if(sellerNameSearch.equals(usernameSuspect)){
+                            isSellerPresent = true;
+                        }
+                    }
+                }catch(Exception e){
+                    e.printStackTrace(System.out);
+                }
+                if(isSellerPresent){
+                    String newTicketEntry = untrimmedEventName + ' ' + untrimmedSellerName + 
+                        ' ' + newTicketsToApply + ' ' + newPrice + '\n';
+                    outputLines.add(newTicketEntry);
+                }else{
+                    return "Eventname: " + eventNameSearch + " was found but " +
+                        sellerNameSearch + " does not exist";
+                }
             }
         }
 
